@@ -1,0 +1,74 @@
+<!doctype html>
+<!--
+  Casa Franco gece resepsiyonu iletişim sayfası.
+  Misafir masadaki karttaki QR'ı okutunca bu sayfa açılır. İçerik config.js'ten,
+  metinler i18n.js'ten doldurulur; HTML'de sadece iskelet ve varsayılan TR metin var.
+-->
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <!-- Kişisel iletişim sayfası arama motorlarında çıkmasın; sadece QR ile erişilsin. -->
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#141a2e">
+  <title>Casa Franco · Night Reception</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baumans&family=Comfortaa:wght@500;700&family=Quicksand:wght@400;600;700&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main>
+    <nav class="lang" aria-label="Language">
+      <button type="button" data-lang="tr" aria-pressed="false">TR</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      <button type="button" data-lang="ru" aria-pressed="false">RU</button>
+    </nav>
+
+    <header>
+      <div class="rule"></div>
+      <div class="logo-art" role="img" aria-label="Casa Franco"></div>
+      <div class="rule"></div>
+      <h1 class="wordmark">casa franco</h1>
+      <div class="rule short"></div>
+      <p class="role" data-i18n="role">Gece Resepsiyonu</p>
+    </header>
+
+    <section class="card">
+      <p class="intro" data-i18n="intro"></p>
+      <p class="status" id="status" aria-live="polite"><span></span></p>
+
+      <a class="btn btn-wa" id="wa" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3 1 2.5c.1.2 1.6 2.5 4 3.5 1.5.6 2 .7 2.8.6.4-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg>
+        <span data-i18n="whatsapp"></span>
+      </a>
+      <button type="button" class="btn btn-ghost" id="save">
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="8" r="4"/><path d="M3 20c0-3.5 3-6 7-6s7 2.5 7 6M19 8v6M16 11h6"/></svg>
+        <span data-i18n="save"></span>
+      </button>
+      <p class="phone" id="phone"></p>
+    </section>
+
+    <dl class="meta">
+      <div class="card">
+        <dt data-i18n="shift"></dt>
+        <dd id="shift-hours"></dd>
+      </div>
+      <div class="card">
+        <dt data-i18n="emergency"></dt>
+        <dd><a id="emergency-link" href="#"></a></dd>
+      </div>
+    </dl>
+
+    <footer><div class="rule short"></div></footer>
+  </main>
+
+  <script src="js/config.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/contact.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!doctype html>
+<!--
+  Resepsiyon masası kartı (A6 dikey, 105×148 mm), tarayıcıdan yazdırılır.
+  Misafir dilini seçemeyeceği için kartta üç dil birden yer alır.
+  Baskı krem kâğıda siyah mürekkep olarak tasarlandı (logonun orijinal düzeni);
+  koyu zeminli baskı hem mürekkep harcar hem ucuz yazıcıda çizgili çıkar.
+-->
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Casa Franco · Desk Card</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baumans&family=Comfortaa:wght@500;700&family=Quicksand:wght@500;700&display=swap">
+  <style>
+    @page { size: 105mm 148mm; margin: 0; }
+    :root { --ink: #1b1b1b; --paper: #f6f1e4; --accent: #b65f3b; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+    body {
+      background: #8a8a8a;
+      font-family: 'Quicksand', 'Comfortaa', system-ui, sans-serif;
+      color: var(--ink);
+      display: flex;
+      justify-content: center;
+      padding: 24px 16px;
+    }
+    .sheet {
+      width: 105mm;
+      height: 148mm;
+      background: var(--paper);
+      padding: 8mm 8mm 6mm;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      box-shadow: 0 6px 24px rgb(0 0 0 / .3);
+      /* Tarayıcı varsayılanı arka plan renklerini basmaz; mask'lı logo da bir arka plan. */
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .rule { display: flex; gap: 3mm; width: 100%; }
+    .rule::before, .rule::after { content: ''; height: 1.2mm; border-radius: 1mm; background: var(--ink); flex: 1; }
+    .logo-art {
+      width: 100%;
+      aspect-ratio: 600 / 250;
+      background: var(--ink);
+      -webkit-mask: url('../assets/logo.svg') center / contain no-repeat;
+      mask: url('../assets/logo.svg') center / contain no-repeat;
+      margin: 2mm 0 0;
+    }
+    .wordmark { font: 400 11.5mm/1 'Baumans', sans-serif; margin: 3mm 0 2mm; }
+    .role { font-weight: 700; font-size: 3.1mm; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); margin: 2.5mm 0 0; text-align: center; }
+    .qr { width: 38mm; height: 38mm; margin: 3mm 0 2mm; }
+    .qr svg { width: 100%; height: 100%; display: block; }
+    .scan { list-style: none; margin: 0; padding: 0; text-align: center; font-size: 3.2mm; line-height: 1.45; font-weight: 500; }
+    .scan b { font-weight: 700; }
+    .foot { margin-top: auto; padding-top: 2mm; width: 100%; display: flex; justify-content: space-between; font-size: 3mm; font-weight: 700; font-variant-numeric: tabular-nums; }
+    .warn {
+      position: absolute; inset: 0; display: none; align-items: center; justify-content: center;
+      background: rgb(179 38 30 / .9); color: #fff; font: 700 5mm/1.3 system-ui, sans-serif; text-align: center; padding: 10mm;
+    }
+    .incomplete .warn { display: flex; }
+    @media print {
+      body { background: none; padding: 0; }
+      .sheet { box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <article class="sheet">
+    <div class="rule"></div>
+    <div class="logo-art" role="img" aria-label="Casa Franco"></div>
+    <div class="rule"></div>
+    <div class="wordmark">casa franco</div>
+    <!-- lang öznitelikleri büyük harf dönüşümünü dile göre yapar; aksi halde TR kuralı "NİGHT" üretir. -->
+    <p class="role"><span>Gece Resepsiyonu</span> · <span lang="en">Night Reception</span> · <span lang="ru">Ночной ресепшн</span></p>
+
+    <div class="qr" id="qr"></div>
+
+    <ul class="scan">
+      <li><b>WhatsApp</b> — okutun, bana yazın</li>
+      <li>Scan to message me</li>
+      <li>Отсканируйте и напишите мне</li>
+    </ul>
+
+    <div class="foot">
+      <span id="phone"></span>
+      <span id="shift"></span>
+    </div>
+
+    <!-- Eksik numarayla kart basılmasın diye baskıya da çıkan uyarı. -->
+    <div class="warn">config.js: telefon numarası eksik — yazdırmayın</div>
+  </article>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/contact.js"></script>
+  <script src="../vendor/qrcode.js"></script>
+  <script>
+    (function () {
+      const cfg = window.CF_CONFIG;
+      // siteUrl varsa QR sayfaya gider; numara değişirse kart yeniden basılmaz.
+      const target = cfg.siteUrl || CF.whatsappUrl();
+      // margin 4: QR standardının istediği 4 modüllük boşluk; olmazsa bazı telefonlar okumaz.
+      // 'M' düzeltme seviyesi: kart masada çizilse/yıpransa da okunmaya devam etsin.
+      const qr = qrcode(0, 'M');
+      qr.addData(target);
+      qr.make();
+      document.getElementById('qr').innerHTML = qr.createSvgTag({ scalable: true, margin: 4 });
+
+      document.getElementById('phone').textContent = CF.formatPhone();
+      document.getElementById('shift').textContent = `${cfg.shift.start} – ${cfg.shift.end}`;
+      if (!CF.isPhoneComplete()) document.body.classList.add('incomplete');
+    })();
+  </script>
+</body>
+</html>

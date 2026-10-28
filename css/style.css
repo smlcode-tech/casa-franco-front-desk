@@ -1,0 +1,203 @@
+/*
+ * İletişim sayfası stilleri — "gece" teması.
+ * Logonun krem zemin / siyah çizgi düzeni tersine çevrildi (lacivert zemin /
+ * krem çizgi); misafir gece karanlık odada telefona baktığında göz almasın diye.
+ * Tek vurgu rengi kiremit tonudur, logodaki çatılardan esinlenildi.
+ */
+:root {
+  --bg: #141a2e;
+  --surface: #1c2340;
+  --line: #2c3456;
+  --cream: #f2ebd9;
+  --muted: #b3ad9e;
+  --accent: #d27a52;
+  --ok: #7fc8a0;
+  --wa: #25d366;
+  --radius: 18px;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; }
+
+body {
+  min-height: 100dvh;
+  background: var(--bg);
+  color: var(--cream);
+  /* Comfortaa: Quicksand'de Kiril yok; RU metin aynı yuvarlak karakterde kalsın diye yedek. */
+  font: 400 17px/1.55 'Quicksand', 'Comfortaa', system-ui, sans-serif;
+  display: flex;
+  justify-content: center;
+  padding: 20px 16px 32px;
+}
+
+main { width: 100%; max-width: 440px; }
+
+/* Dil seçici: misafir ilk anda kendi dilini bulabilsin diye en üstte. */
+.lang {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+.lang button {
+  font: 600 13px/1 'Quicksand', 'Comfortaa', sans-serif;
+  letter-spacing: .08em;
+  color: var(--muted);
+  background: transparent;
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+.lang button[aria-pressed="true"] {
+  color: var(--bg);
+  background: var(--cream);
+  border-color: var(--cream);
+}
+
+/* Logodaki yatay çerçeve çizgileri: uçları yuvarlak, ortası boşluklu. */
+.rule {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+.rule::before, .rule::after {
+  content: '';
+  height: 5px;
+  border-radius: 5px;
+  background: var(--cream);
+  flex: 1;
+}
+.rule.short::before { flex: 0 0 18%; }
+.rule.short::after { flex: 0 0 18%; margin-left: auto; }
+
+/* SVG'yi mask olarak kullanmak, tek dosyayla rengi CSS'ten yönetmeyi sağlıyor. */
+.logo-art {
+  width: 100%;
+  aspect-ratio: 600 / 250;
+  background: var(--cream);
+  -webkit-mask: url('../assets/logo.svg') center / contain no-repeat;
+  mask: url('../assets/logo.svg') center / contain no-repeat;
+  margin: 18px 0 6px;
+}
+
+.wordmark {
+  font: 400 clamp(44px, 14vw, 62px)/1 'Baumans', 'Quicksand', 'Comfortaa', sans-serif;
+  text-align: center;
+  margin: 14px 0 12px;
+  letter-spacing: .02em;
+}
+
+.role {
+  text-align: center;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 18px 0 0;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 22px 20px;
+  margin-top: 22px;
+}
+
+.intro { margin: 0 0 18px; color: var(--cream); }
+
+.status {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 15px;
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+.status::before {
+  content: '';
+  flex: 0 0 10px;
+  height: 10px;
+  margin-top: 7px;
+  border-radius: 50%;
+  background: var(--muted);
+}
+.status[data-state="on"] { color: var(--ok); font-weight: 600; }
+.status[data-state="on"]::before {
+  background: var(--ok);
+  box-shadow: 0 0 0 4px rgb(127 200 160 / .2);
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 56px;
+  border-radius: 14px;
+  font: 700 17px/1 'Quicksand', 'Comfortaa', sans-serif;
+  text-decoration: none;
+  cursor: pointer;
+}
+.btn svg { width: 22px; height: 22px; flex: none; }
+.btn-wa { background: var(--wa); color: #0b2a17; border: 0; }
+.btn-ghost {
+  margin-top: 10px;
+  background: transparent;
+  color: var(--cream);
+  border: 1.5px solid var(--line);
+}
+.btn:focus-visible, .lang button:focus-visible, a:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.phone {
+  text-align: center;
+  font-weight: 600;
+  letter-spacing: .04em;
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 12px;
+}
+.meta .card { margin: 0; padding: 16px; }
+.meta dt { font-size: 13px; color: var(--muted); }
+.meta dd {
+  margin: 4px 0 0;
+  font-size: 20px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.meta a { color: var(--accent); text-decoration: none; }
+
+footer { margin-top: 28px; }
+
+/* Numara eksikken sayfanın yanlışlıkla yayınlanmaması için görünür uyarı. */
+body.phone-incomplete::before {
+  content: 'config.js: phone number incomplete';
+  position: fixed;
+  inset: 0 0 auto;
+  background: #b3261e;
+  color: #fff;
+  font: 700 13px/1 system-ui, sans-serif;
+  text-align: center;
+  padding: 8px;
+  z-index: 10;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .status[data-state="on"]::before { animation: pulse 2.4s ease-in-out infinite; }
+}
+@keyframes pulse { 50% { box-shadow: 0 0 0 7px rgb(127 200 160 / 0); } }

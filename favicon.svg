@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Favicon: logodaki çan kulesi + zemin çizgisi. Tam logo 16-32 px'de okunmadığı
+  için en ayırt edici tek öğe seçildi. Gece temasıyla aynı renkler (lacivert/krem).
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="14" fill="#141a2e"/>
+  <g fill="none" stroke="#f2ebd9" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M10 52h44"/>
+    <path d="M24 52V30h16v22"/>
+    <path d="M20 28h24"/>
+    <path d="M27 26v-6h10v6"/>
+    <path d="M27 20a5 5 0 0 1 10 0"/>
+    <path d="M32 14V7M29 10h6" stroke-width="3.5"/>
+  </g>
+  <circle cx="32" cy="42" r="3" fill="#d27a52"/>
+</svg>
