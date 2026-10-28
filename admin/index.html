@@ -1,0 +1,85 @@
+<!doctype html>
+<!--
+  Gece resepsiyonu yönetim paneli (/admin).
+  Buradan kaydedilen değerler /api/admin/config üzerinden Edge Config'e yazılır
+  ve misafir sayfası (/) bir sonraki açılışta onları gösterir.
+  Panel sadece Türkçe: tek kullanıcısı resepsiyonist.
+-->
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#141a2e">
+  <title>Casa Franco · Panel</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baumans&family=Quicksand:wght@400;600;700&display=swap">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <main>
+    <header class="admin-head">
+      <span class="wordmark small">casa franco</span>
+      <span class="role">Panel</span>
+    </header>
+
+    <!-- Giriş -->
+    <form id="login" class="card" hidden>
+      <label for="password">Şifre</label>
+      <input id="password" name="password" type="password" autocomplete="current-password" required>
+      <button class="btn btn-primary" type="submit">Giriş yap</button>
+      <p class="msg" id="login-msg" role="alert"></p>
+    </form>
+
+    <!-- Ayarlar -->
+    <form id="settings" hidden novalidate>
+      <section class="card">
+        <h2>İletişim</h2>
+        <label for="phone">WhatsApp numarası</label>
+        <input id="phone" name="phone" type="tel" inputmode="tel" placeholder="+90 5XX XXX XX XX" required>
+        <p class="hint">Misafirlerin mesajları bu numaraya gider. Kaydetmeden önce iki kez kontrol et.</p>
+
+        <div class="row">
+          <div>
+            <label for="start">Vardiya başlangıcı</label>
+            <input id="start" name="start" type="time" required>
+          </div>
+          <div>
+            <label for="end">Vardiya bitişi</label>
+            <input id="end" name="end" type="time" required>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Durum</h2>
+        <label class="radio"><input type="radio" name="status" value="auto"> Otomatik (vardiya saatine göre)</label>
+        <label class="radio"><input type="radio" name="status" value="off"> Bu gece görevde değilim</label>
+      </section>
+
+      <section class="card">
+        <h2>Duyuru <span class="hint inline">(boş bırakılırsa gösterilmez)</span></h2>
+        <label for="ann-tr">Türkçe</label>
+        <textarea id="ann-tr" maxlength="200" rows="2"></textarea>
+        <label for="ann-en">English</label>
+        <textarea id="ann-en" maxlength="200" rows="2"></textarea>
+        <label for="ann-ru">Русский</label>
+        <textarea id="ann-ru" maxlength="200" rows="2"></textarea>
+      </section>
+
+      <button class="btn btn-primary" type="submit" id="save">Kaydet ve yayınla</button>
+      <p class="msg" id="save-msg" role="status"></p>
+      <p class="hint center" id="updated"></p>
+
+      <div class="actions">
+        <a class="btn btn-ghost" href="/" target="_blank" rel="noopener">Siteyi aç</a>
+        <button class="btn btn-ghost" type="button" id="logout">Çıkış</button>
+      </div>
+    </form>
+  </main>
+
+  <script src="../js/config.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
