@@ -21,7 +21,7 @@ window.CF_CONFIG = {
   // Masa kartındaki QR'ın hedefi. Boşsa QR doğrudan WhatsApp'a gider.
   // Sayfa yayınlanınca buraya kalıcı URL yazılmalı; böylece numara değişse de
   // basılı kartları yenilemek gerekmez.
-  siteUrl: '',
+  siteUrl: 'https://casa-franco-front-desk.vercel.app/',
 
   // Acil durum numarası (Türkiye, tek acil çağrı hattı).
   emergency: '112'
