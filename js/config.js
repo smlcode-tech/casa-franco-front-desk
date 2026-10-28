@@ -8,13 +8,10 @@
  */
 window.CF_CONFIG = {
   // E.164 biçiminde tam numara. Türkiye cep numarası +90 ile birlikte 12 hanedir.
-  // UYARI: verilen numara ("+90 501 770") eksik; tamamlanmadan yayınlanmamalı.
-  phone: '+90501770',
+  phone: '+905016706820',
 
   // Vardiya, otelin saat diliminde (HH:MM). Bitiş başlangıçtan küçükse
   // vardiya gece yarısını aşıyor demektir.
-  // UYARI: "10.00 - 08.00" olarak iletildi; 22 saatlik vardiya olası
-  // görünmediği için 22:00 varsayıldı, teyit bekleniyor.
   shift: { start: '22:00', end: '08:00' },
 
   // "Şu an görevde" göstergesi misafirin telefonunun değil, otelin saatine
