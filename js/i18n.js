@@ -14,6 +14,7 @@ window.CF_I18N = {
     shift: 'Vardiya saatleri',
     onDuty: 'Şu an görevdeyim',
     offDuty: 'Şu an vardiya dışındayım. Mesajınızı bırakın, vardiyam başlayınca yanıtlarım.',
+    away: 'Bu gece görevde değilim. Lütfen resepsiyon masasına başvurun.',
     emergency: 'Acil durumda',
     prefill: 'Merhaba, Casa Franco’da kalıyorum. Oda numaram: ',
     contactName: 'Casa Franco Gece Resepsiyonu'
@@ -26,6 +27,7 @@ window.CF_I18N = {
     shift: 'Shift hours',
     onDuty: 'On duty now',
     offDuty: 'I’m off duty right now. Leave a message and I’ll reply when my shift starts.',
+    away: 'I’m not on duty tonight. Please contact the front desk.',
     emergency: 'Emergency',
     prefill: 'Hello, I’m staying at Casa Franco. My room number is: ',
     contactName: 'Casa Franco Night Reception'
@@ -38,6 +40,7 @@ window.CF_I18N = {
     shift: 'Часы смены',
     onDuty: 'Сейчас на смене',
     offDuty: 'Сейчас я не на смене. Оставьте сообщение — отвечу, когда начнётся смена.',
+    away: 'Сегодня ночью я не на смене. Пожалуйста, обратитесь на ресепшн.',
     emergency: 'Экстренная помощь',
     prefill: 'Здравствуйте, я живу в Casa Franco. Номер моей комнаты: ',
     contactName: 'Casa Franco Ночной ресепшн'

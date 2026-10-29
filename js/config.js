@@ -1,5 +1,10 @@
 /*
- * Casa Franco gece resepsiyonu — tek ayar dosyası.
+ * Casa Franco gece resepsiyonu — YEDEK ayarlar.
+ *
+ * Canlı değerler yönetim panelinden (/admin) kaydedilir ve /api/config'ten
+ * okunur. Bu dosya, API'ye ulaşılamadığında sayfanın boş kalmaması için
+ * kullanılan varsayılanları tutar; panelden numara değiştirirsen burayı da
+ * güncellemen iyi olur.
  *
  * Sayfadaki (index.html), rehber kartındaki (vCard) ve masa kartındaki
  * (print/desk-card.html) bütün iletişim verisi buradan okunur. Numara ya da
@@ -24,5 +29,9 @@ window.CF_CONFIG = {
   siteUrl: 'https://casa-franco-front-desk.vercel.app/',
 
   // Acil durum numarası (Türkiye, tek acil çağrı hattı).
-  emergency: '112'
+  emergency: '112',
+
+  // Panelden yönetilen alanların varsayılanları.
+  status: 'auto',
+  announcement: { tr: '', en: '', ru: '' }
 };

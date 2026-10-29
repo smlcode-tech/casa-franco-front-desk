@@ -110,6 +110,17 @@ main { width: 100%; max-width: 440px; }
 
 .intro { margin: 0 0 18px; color: var(--cream); }
 
+.announcement {
+  margin: 22px 0 0;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1.5px solid var(--accent);
+  color: var(--cream);
+  font-weight: 600;
+  font-size: 15px;
+}
+.announcement[hidden] { display: none; }
+
 .status {
   display: flex;
   gap: 10px;
