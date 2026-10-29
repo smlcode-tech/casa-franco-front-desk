@@ -34,11 +34,13 @@ export async function readSite() {
  * Ayarı yazar. Edge Config'in okuma token'ı yazamaz; yazma için Vercel hesap
  * token'ı (VERCEL_API_TOKEN) gerekir, bu yüzden bu yol sadece oturum
  * doğrulandıktan sonra çağrılır.
+ * Vercel, Edge Config'i "Global Config" olarak yeniden adlandırdı; eski
+ * /v1/edge-config/... yazma adresi production'da 404 döndü, güncel adres kullanılıyor.
  */
 export async function writeSite(value) {
   const { id } = edgeConnection();
   const team = process.env.VERCEL_TEAM_ID ? `?teamId=${process.env.VERCEL_TEAM_ID}` : '';
-  const res = await fetch(`https://api.vercel.com/v1/edge-config/${id}/items${team}`, {
+  const res = await fetch(`https://api.vercel.com/v1/global-config/${id}/items${team}`, {
     method: 'PATCH',
     headers: {
       Authorization: `Bearer ${process.env.VERCEL_API_TOKEN}`,
@@ -46,7 +48,13 @@ export async function writeSite(value) {
     },
     body: JSON.stringify({ items: [{ operation: 'upsert', key: EDGE_KEY, value }] })
   });
-  if (!res.ok) throw new Error(`Edge Config yazma hatası: ${res.status}`);
+  if (!res.ok) {
+    // Vercel'in hata kodu (ör. not_found, forbidden) loga yazılır: 404'ün yanlış
+    // adres mi yoksa yanlış kapsamlı token mı olduğunu ayırt etmenin tek yolu bu.
+    // Cevap gövdesi token içermez; yine de uzunluğu sınırlanır.
+    const detail = (await res.text().catch(() => '')).slice(0, 300);
+    throw new Error(`Edge Config yazma hatası: ${res.status} ${detail}`);
+  }
 }
 
 const HHMM = /^([01]\d|2[0-3]):[0-5]\d$/;
