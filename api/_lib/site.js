@@ -10,14 +10,30 @@ const LANGS = ['tr', 'en', 'ru'];
 const ANNOUNCEMENT_MAX = 200;
 
 /**
+ * Eksik ortam değişkeni için ayrı hata türü. Endpoint bunu tanıyıp panele
+ * hangi değişkenin eksik olduğunu söyler; önceden eksik VERCEL_API_TOKEN
+ * "Bearer undefined" olarak gönderiliyor ve Vercel'den anlamsız bir 404 dönüyordu.
+ */
+export class MissingEnvError extends Error {
+  constructor(name) {
+    super(`${name} tanımlı değil`);
+    this.envName = name;
+  }
+}
+
+function requireEnv(name) {
+  const value = process.env[name];
+  if (!value) throw new MissingEnvError(name);
+  return value;
+}
+
+/**
  * EDGE_CONFIG bağlantı adresinden (https://edge-config.vercel.com/<id>?token=...)
  * store kimliğini ve okuma token'ını ayırır. Ayrı env değişkeni tutmamak için
  * Vercel'in standart bağlantı biçimi tek kaynak olarak kullanılıyor.
  */
 function edgeConnection() {
-  const raw = process.env.EDGE_CONFIG;
-  if (!raw) throw new Error('EDGE_CONFIG tanımlı değil');
-  const url = new URL(raw);
+  const url = new URL(requireEnv('EDGE_CONFIG'));
   return { id: url.pathname.replace(/^\//, ''), token: url.searchParams.get('token') };
 }
 
@@ -39,11 +55,13 @@ export async function readSite() {
  */
 export async function writeSite(value) {
   const { id } = edgeConnection();
+  // İstek göndermeden önce kontrol edilir: token yoksa Vercel'e gitmenin anlamı yok.
+  const apiToken = requireEnv('VERCEL_API_TOKEN');
   const team = process.env.VERCEL_TEAM_ID ? `?teamId=${process.env.VERCEL_TEAM_ID}` : '';
   const res = await fetch(`https://api.vercel.com/v1/global-config/${id}/items${team}`, {
     method: 'PATCH',
     headers: {
-      Authorization: `Bearer ${process.env.VERCEL_API_TOKEN}`,
+      Authorization: `Bearer ${apiToken}`,
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({ items: [{ operation: 'upsert', key: EDGE_KEY, value }] })
