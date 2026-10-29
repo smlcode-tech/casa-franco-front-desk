@@ -1,0 +1,24 @@
+# Cloudflare Worker yapılandırması. Statik dosyalar public/ altında; kök
+# klasör verilmedi çünkü assets klasöründeki her dosya herkese açık yayınlanır
+# (src/, README, bu dosya dışarıdan okunabilir olurdu).
+name = "casa-franco-front-desk"
+main = "src/worker.js"
+compatibility_date = "2025-10-01"
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+# Her istek önce Worker'dan geçer: /api yönlendirmesi ve /admin güvenlik
+# başlıkları Worker'da ekleniyor.
+run_worker_first = true
+
+# Panelden kaydedilen canlı ayar. id, Cloudflare'de oluşturulan
+# "casa-franco-site" KV deposunun kimliği (gizli değil).
+[[kv_namespaces]]
+binding = "SITE_KV"
+id = "be414ecb0e4246e692cca6ebce96ae75"
+
+# Özel alan adı alındığında buraya eklenecek, ör.:
+# routes = [{ pattern = "casafranco-reception.com", custom_domain = true }]
+
+# ADMIN_PASSWORD burada DEĞİL: Cloudflare panelinde Secret olarak tanımlanır.
