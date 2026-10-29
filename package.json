@@ -2,5 +2,12 @@
   "name": "casa-franco-front-desk",
   "private": true,
   "type": "module",
-  "description": "Casa Franco gece resepsiyonu iletişim sayfası ve yönetim paneli"
+  "description": "Casa Franco gece resepsiyonu iletişim sayfası ve yönetim paneli (Cloudflare Worker)",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "4.155.0"
+  }
 }

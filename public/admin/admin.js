@@ -71,7 +71,7 @@
       const { authenticated, configured } = await res.json();
       if (!configured) {
         show(loginForm);
-        message($('login-msg'), 'Panel henüz yapılandırılmamış (ADMIN_PASSWORD tanımlı değil).', 'error');
+        message($('login-msg'), 'Panel henüz yapılandırılmamış: ADMIN_PASSWORD tanımlı değil ya da 12 karakterden kısa.', 'error');
         return;
       }
       if (authenticated) {
@@ -125,7 +125,7 @@
       const res = await api('/api/admin/config', { method: 'PUT', body: JSON.stringify(body) });
       if (res.ok) {
         const saved = await res.json();
-        message(msg, 'Kaydedildi. Sitede birkaç saniye içinde görünür.', 'ok');
+        message(msg, 'Kaydedildi. Sitede en geç 1 dakika içinde görünür.', 'ok');
         showUpdated(saved.updatedAt);
       } else if (res.status === 401) {
         // Oturum süresi doldu; kaydedilmemiş değişiklik kaybolmasın diye form temizlenmez.
@@ -138,7 +138,7 @@
       } else if (res.status === 500) {
         // Sunucu yapılandırma hatası: tekrar denemek işe yaramaz, eksik olanı söyle.
         const { name } = await res.json().catch(() => ({}));
-        message(msg, `Sunucu ayarı eksik: ${name || 'bilinmiyor'}. Vercel'de ortam değişkenini ekleyip yeniden deploy et.`, 'error');
+        message(msg, `Sunucu ayarı eksik: ${name || 'bilinmiyor'}. Cloudflare'de Worker ayarlarına ekleyip yeniden deploy et.`, 'error');
       } else {
         message(msg, 'Kaydedilemedi. Biraz sonra tekrar dene.', 'error');
       }
