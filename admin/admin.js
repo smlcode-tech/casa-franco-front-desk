@@ -135,6 +135,10 @@
         const { fields = [] } = await res.json();
         if (fields.includes('phone')) $('phone').setAttribute('aria-invalid', 'true');
         message(msg, fields.map((f) => FIELD_LABELS[f] || 'Duyuru en fazla 200 karakter olabilir.').join(' '), 'error');
+      } else if (res.status === 500) {
+        // Sunucu yapılandırma hatası: tekrar denemek işe yaramaz, eksik olanı söyle.
+        const { name } = await res.json().catch(() => ({}));
+        message(msg, `Sunucu ayarı eksik: ${name || 'bilinmiyor'}. Vercel'de ortam değişkenini ekleyip yeniden deploy et.`, 'error');
       } else {
         message(msg, 'Kaydedilemedi. Biraz sonra tekrar dene.', 'error');
       }

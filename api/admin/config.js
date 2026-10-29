@@ -4,7 +4,7 @@
  * olmadan hiçbir şey yazılmaz.
  */
 import { hasValidSession, isSameOrigin } from '../_lib/session.js';
-import { validateSite, writeSite } from '../_lib/site.js';
+import { MissingEnvError, validateSite, writeSite } from '../_lib/site.js';
 
 export default async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store');
@@ -24,6 +24,10 @@ export default async function handler(req, res) {
     return res.status(200).json(value);
   } catch (err) {
     console.error(err);
+    // Değişken adı sadece oturum açmış panel kullanıcısına döner; değeri asla dönmez.
+    if (err instanceof MissingEnvError) {
+      return res.status(500).json({ error: 'missing_env', name: err.envName });
+    }
     return res.status(502).json({ error: 'write_failed' });
   }
 }
